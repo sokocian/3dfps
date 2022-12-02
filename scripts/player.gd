@@ -1,14 +1,19 @@
 extends KinematicBody
 
 export var MOUSE_SENS = 0.2
-export var CAMERA_ACCEL = 40
-export var SPEED = 10
-export var DEFAULT_ACCEL = 10
-export var AIR_ACCEL = 1
-export var GRAVITY = 25
-export var JUMP_FORCE = 10
+export var CAMERA_ACCEL = 40.0
+export var SPEED = 8.0
+export var DEFAULT_ACCEL = 16.0
+export var AIR_ACCEL = 1.0
+export var GRAVITY = 25.0
+export var JUMP_FORCE = 8.0
+
+var m_interaction = load("res://scripts/interaction.gd").new()
+var crosshair_default = load("res://images/hud/crosshair_default.png")
+var crosshair_select = load("res://images/hud/crosshair_select.png")
 
 var ground_cast_contact = false
+var crosshair_is_selection = false
 
 var move_direction = Vector3()
 var move_velocity = Vector3()
@@ -18,21 +23,38 @@ var gravity_vector = Vector3()
 var acceleration
 var snap
 var current_velocity
+var camera_target
 
 onready var head = $Head
 onready var camera = $Head/Camera
 onready var camera_ray = $Head/Camera/Raycast
 onready var player_mesh = $Mesh
+onready var crosshair = $Head/Camera/Crosshair
+
+func update_crosshair():
+	if camera_target != null and camera_target.has_meta("interactable") and camera_target.get_meta("interactable"):
+		crosshair.texture = crosshair_select
+		crosshair_is_selection = true
+	elif crosshair_is_selection:
+		crosshair.texture = crosshair_default
+		crosshair_is_selection = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	player_mesh.set_visible(false)
+	camera_ray.add_exception(self)
 
 func _input(event):
+	camera_target = m_interaction.get_camera_target(camera_ray)
+	update_crosshair()
+	
 	if event is InputEventMouseMotion:
 		rotate_y(deg2rad(-event.relative.x * MOUSE_SENS))
 		head.rotate_x(deg2rad(-event.relative.y * MOUSE_SENS))
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89))
+		
+	if Input.is_action_just_pressed("select"):
+		m_interaction.interact_node(camera_target)
 		
 func _process(delta):
 	#camera physics interpolation black magic to reduce physics jitter on high refresh-rate monitors
