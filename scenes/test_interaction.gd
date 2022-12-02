@@ -1,4 +1,4 @@
-extends StaticBody
+extends RigidBody
 
 func _ready():
 	self.set_meta("interactable", true)

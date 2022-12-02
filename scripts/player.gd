@@ -1,12 +1,12 @@
 extends KinematicBody
 
-export var MOUSE_SENS = 0.2
+export var MOUSE_SENS = 0.08
 export var CAMERA_ACCEL = 40.0
 export var SPEED = 8.0
 export var DEFAULT_ACCEL = 16.0
-export var AIR_ACCEL = 1.0
-export var GRAVITY = 25.0
-export var JUMP_FORCE = 8.0
+export var AIR_ACCEL = 2.0
+export var GRAVITY = 28.0
+export var JUMP_FORCE = 10.0
 
 var m_interaction = load("res://scripts/interaction.gd").new()
 var crosshair_default = load("res://images/hud/crosshair_default.png")
@@ -24,15 +24,17 @@ var acceleration
 var snap
 var current_velocity
 var camera_target
+var held_object 
 
 onready var head = $Head
-onready var camera = $Head/Camera
-onready var camera_ray = $Head/Camera/Raycast
+onready var camera = head.get_node("Camera")
+onready var camera_ray = camera.get_node("Raycast")
 onready var player_mesh = $Mesh
-onready var crosshair = $Head/Camera/Crosshair
+onready var crosshair = camera.get_node("Crosshair")
+onready var hold_pos = camera.get_node("HoldPos")
 
 func update_crosshair():
-	if camera_target != null and camera_target.has_meta("interactable") and camera_target.get_meta("interactable"):
+	if (camera_target != null and camera_target.has_meta("interactable") and camera_target.get_meta("interactable")) or (camera_target != null and camera_target.get_class() == "RigidBody"):
 		crosshair.texture = crosshair_select
 		crosshair_is_selection = true
 	elif crosshair_is_selection:
@@ -55,6 +57,12 @@ func _input(event):
 		
 	if Input.is_action_just_pressed("select"):
 		m_interaction.interact_node(camera_target)
+		
+	if Input.is_action_just_pressed("pickup"):
+		if camera_target != null and camera_target.get_class() == "RigidBody":
+			held_object = camera_target
+			held_object.mode = RigidBody.MODE_KINEMATIC
+			held_object.collision_mask = 0
 		
 func _process(delta):
 	#camera physics interpolation black magic to reduce physics jitter on high refresh-rate monitors
@@ -91,5 +99,8 @@ func _physics_process(delta):
 	movement = move_velocity + gravity_vector
 	
 	current_velocity = move_and_slide_with_snap(movement, snap, Vector3.UP)
+	
+	if held_object:
+		held_object.global_transform.origin = hold_pos.global_transform.origin
 
 
