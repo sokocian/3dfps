@@ -1,0 +1,6 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://images/objects/decor/modern_arm_chair/modern_arm_chair_legs_color.png" type="Texture" id=2]
+
+[resource]
+albedo_texture = ExtResource( 2 )
