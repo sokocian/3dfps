@@ -8,7 +8,6 @@ export var AIR_ACCEL = 2.0
 export var GRAVITY = 28.0
 export var JUMP_FORCE = 10.0
 
-var m_interaction = load("res://scripts/interaction.gd").new()
 var crosshair_default = load("res://images/hud/crosshair_default.png")
 var crosshair_select = load("res://images/hud/crosshair_select.png")
 
@@ -47,7 +46,7 @@ func _ready():
 	camera_ray.add_exception(self)
 
 func _input(event):
-	camera_target = m_interaction.get_camera_target(camera_ray)
+	camera_target = camera_ray.get_collider()
 	update_crosshair()
 	
 	if event is InputEventMouseMotion:
@@ -56,7 +55,8 @@ func _input(event):
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89))
 		
 	if Input.is_action_just_pressed("select"):
-		m_interaction.interact_node(camera_target)
+		if camera_target != null and camera_target.has_meta("interactable") and camera_target.get_meta("interactable"):
+			camera_target.interact()
 		
 	if Input.is_action_just_pressed("pickup"):
 		if camera_target != null and camera_target.get_class() == "RigidBody":
