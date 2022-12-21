@@ -1,0 +1,1257 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://meshes/objects/buildings/brick_building.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://images/objects/building/brick_buillding_front.png" type="Texture" id=2]
+[ext_resource path="res://images/surfaces/ground/road.png" type="Texture" id=3]
+[ext_resource path="res://meshes/objects/surfaces/sidewalk.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://images/surfaces/ground/sidewalk.png" type="Texture" id=5]
+
+[sub_resource type="SpatialMaterial" id=7]
+resource_name = "road"
+vertex_color_use_as_albedo = true
+params_cull_mode = 2
+albedo_texture = ExtResource( 3 )
+roughness = 0.5
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+uv1_scale = Vector3( 2, 1, 2 )
+
+[sub_resource type="ArrayMesh" id=2]
+resource_name = "Road_Plane004"
+surfaces/0 = {
+"aabb": AABB( -1, 0, -1, 2.00001, 1e-05, 2.00001 ),
+"array_data": PoolByteArray( 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 127, 127, 63, 0, 60, 0, 60, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191, 0, 127, 127, 63, 0, 60, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 127, 127, 63, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 127, 127, 63, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray( 0, 0, 2, 0, 1, 0, 0, 0, 3, 0, 2, 0 ),
+"blend_shape_data": [  ],
+"format": 2194711,
+"index_count": 6,
+"material": SubResource( 7 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 4
+}
+
+[sub_resource type="ConvexPolygonShape" id=3]
+points = PoolVector3Array( -1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="ConvexPolygonShape" id=6]
+points = PoolVector3Array( 4.00733, 0.10989, 0.974269, -0.00693321, 0.0952381, -0.00732601, -0.00732613, -0.00732601, 0.988915, 4.00733, -0.00732601, 0.988915, 4.00733, 0.0952381, -0.00732601, -0.00732613, 0.0952266, 0.974269 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 2 )
+
+[node name="CityMap" type="Spatial"]
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="StaticBody" type="StaticBody" parent="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial6" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial6/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial6/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial6/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial6/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial6"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial6/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial6/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial6"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial6"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial6"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial6"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial6"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial6"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial6"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial6"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial7" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial7/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial7/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial7/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial7/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial7"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial7/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial7/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial7"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial7"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial7"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial7"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial7"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial7"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial7"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial7"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial8" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial8/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial8/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial8/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial8/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial8"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial8/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial8/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial8"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial8"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial8"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial8"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial8"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial8"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial8"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial8"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial9" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial9/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0.11161, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial9/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial9/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial9/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial9"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial9/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial9/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial9"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial9"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial9"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial9"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial9"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial9"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial9"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial9"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial10" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial10/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial10/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial10/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial10/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial10"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial10/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial10/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial10"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial10"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial10"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial10"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial10"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0.0834026, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial10"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial10"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial10"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial11" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial11/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial11/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial11/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial11/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial11"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial11/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial11/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial11"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial11"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial11"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial11"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial11"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial11"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial11"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial11"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial12" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 96, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial12"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial12/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial12/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial12"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial12/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial12/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial12"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial12/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial12/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial12"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial12"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial12"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial12"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial12"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial12"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial12"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial12"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial13" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial13"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial13/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial13/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial13"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial13/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial13/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial13"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial13/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial13/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial13"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial13"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial13"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial13"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial13"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial13"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial13"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial13"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial2/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial2/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial2/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial2/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial2/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial2/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial2"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial2"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial2"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial2"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial2"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial2"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial2"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial2"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial3" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial3/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial3/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial3/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial3/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial3"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial3/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial3/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial3"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial3"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial3"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial3"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial3"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial3"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial3"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial3"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial4" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial4/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial4/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial4/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial4/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial4"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial4/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial4/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial4"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial4"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial4"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial4"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial4"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial4"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial4"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial4"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="Spatial5" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Spatial5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0877111, 0 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="Road" type="MeshInstance" parent="Spatial5/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../../brick_building")
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial5/StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2" type="StaticBody" parent="Spatial5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial5/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial5/StaticBody2"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="StaticBody3" type="StaticBody" parent="Spatial5"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 6 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial5/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.0834026, 0 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial5/StaticBody3"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="brick_building" type="MeshInstance" parent="Spatial5"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building3" type="MeshInstance" parent="Spatial5"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 15.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building7" type="MeshInstance" parent="Spatial5"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 31.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building8" type="MeshInstance" parent="Spatial5"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 47.9, -5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building2" type="MeshInstance" parent="Spatial5"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building4" type="MeshInstance" parent="Spatial5"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 15.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building5" type="MeshInstance" parent="Spatial5"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 31.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
+
+[node name="brick_building6" type="MeshInstance" parent="Spatial5"]
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 47.9, 5.3 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 8 )
