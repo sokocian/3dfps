@@ -1,9 +1,46 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://images/hud/crosshair_default.png" type="Texture" id=2]
 [ext_resource path="res://materials/ui_theme.tres" type="Theme" id=3]
-[ext_resource path="res://night_env.tres" type="Environment" id=4]
+[ext_resource path="res://env.tres" type="Environment" id=4]
+[ext_resource path="res://materials/shaders/dither.tres" type="Material" id=5]
+[ext_resource path="res://meshes/player_arm.obj" type="ArrayMesh" id=6]
+[ext_resource path="res://images/PlayerArms.png" type="Texture" id=7]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 2.5, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "head_bob"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 2.5, 0 ), Vector3( 0, 2.6, 0 ), Vector3( 0, 2.5, 0 ) ]
+}
 
 [sub_resource type="CapsuleMesh" id=2]
 radius = 0.5
@@ -14,7 +51,7 @@ radius = 0.5
 height = 1.5
 
 [node name="Player" type="KinematicBody"]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 2.5, 0 )
 collision_layer = 4
 collision_mask = 4
 script = ExtResource( 1 )
@@ -23,6 +60,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0969592, 0 )
 environment = ExtResource( 4 )
 
 [node name="Raycast" type="RayCast" parent="Head/Camera"]
@@ -32,12 +70,13 @@ cast_to = Vector3( 0, 0, -1 )
 collision_mask = 2
 
 [node name="Crosshair" type="TextureRect" parent="Head/Camera"]
+modulate = Color( 1, 1, 1, 0.588235 )
 anchor_left = 0.4625
 anchor_top = 0.433333
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_right = 72.0
-margin_bottom = 72.0
+margin_bottom = 72.9996
 rect_scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 __meta__ = {
@@ -54,10 +93,28 @@ margin_right = 100.0
 margin_bottom = 100.0
 theme = ExtResource( 3 )
 
-[node name="Hand" type="Spatial" parent="Head/Camera"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.45, -0.45, -1.25 )
+[node name="ColorRect" type="ColorRect" parent="Head/Camera"]
+material = ExtResource( 5 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="MeshInstance" type="MeshInstance" parent="Head/Camera/Hand"]
+[node name="MeshInstance" type="MeshInstance" parent="Head/Camera"]
+transform = Transform( -0.000808481, 0.174054, -0.0181561, 0.173669, 0.0030314, 0.0213271, 0.0215263, -0.0179195, -0.172744, 0.6, -0.45, 0.0499999 )
+visible = false
+mesh = ExtResource( 6 )
+skeleton = NodePath("")
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Head/Camera"]
+transform = Transform( 0.000808502, 0.174054, 0.0181561, 0.173669, -0.00303142, 0.0213271, 0.0215263, 0.0179195, -0.172744, -0.6, -0.45, 0.05 )
+visible = false
+mesh = ExtResource( 6 )
+skeleton = NodePath("")
+material/0 = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head"]
+anims/RESET = SubResource( 5 )
+anims/head_bob = SubResource( 6 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.25, 0 )

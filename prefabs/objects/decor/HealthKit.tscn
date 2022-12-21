@@ -9,8 +9,8 @@ points = PoolVector3Array( 0.580396, 1.09745, 0.09375, 0.626788, 0.921599, 0.187
 
 [node name="HealthKit" type="RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26162, 0.264251, 0 )
-collision_layer = 7
-collision_mask = 7
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="."]

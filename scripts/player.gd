@@ -41,6 +41,7 @@ onready var player_mesh = $Mesh
 onready var crosshair = camera.get_node("Crosshair")
 onready var interactions_list = camera.get_node("Interactions")
 onready var collider = $Collision
+onready var animation_player = head.get_node("AnimationPlayer")
 
 func update_crosshair():
 	if moving:
@@ -163,6 +164,9 @@ func _physics_process(delta):
 	movement = move_velocity + gravity_vector
 	
 	current_velocity = move_and_slide_with_snap(movement, snap, Vector3.UP, true, 4, PI/4, false)
+	
+	if move_direction != Vector3():
+		animation_player.play("head_bob")
 	
 	for index in get_slide_count():
 		var collision = get_slide_collision(index)
