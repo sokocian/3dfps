@@ -1,9 +1,12 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://GodotRetro/GodotRetro/Screen Shaders/Aditional Shaders/ColorPrecission.shader" type="Shader" id=1]
+[ext_resource path="res://GodotRetro/GodotRetro/Screen Shaders/Grain.shader" type="Shader" id=1]
 
 [resource]
 render_priority = 1
 shader = ExtResource( 1 )
-shader_param/SCREEN_WIDTH = 10.0
-shader_param/COLOR_FACTOR = 10.0
+shader_param/colored = false
+shader_param/color_amount = 0.6
+shader_param/grain_amount = 0.025
+shader_param/grain_size = 1.6
+shader_param/lum_amount = 1.3

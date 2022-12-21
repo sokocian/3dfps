@@ -14,8 +14,9 @@ __meta__ = {
 }
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.99996, 0.00458365, 0.00773172, 0, -0.8602, 0.509958, 0.00898829, -0.509937, -0.860165, -0.385096, 21.8692, -12.7043 )
+transform = Transform( 0.987653, 0.0798892, 0.134758, 0, -0.8602, 0.509957, 0.156659, -0.503661, -0.849579, -0.385096, 21.8692, -18.5442 )
 light_color = Color( 0.788235, 0.772549, 0.552941, 1 )
 light_energy = 0.75
 shadow_enabled = true
 shadow_bias = 0.0
+directional_shadow_normal_bias = 0.215

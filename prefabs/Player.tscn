@@ -1,15 +1,25 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://images/hud/crosshair_default.png" type="Texture" id=2]
 [ext_resource path="res://materials/ui_theme.tres" type="Theme" id=3]
 [ext_resource path="res://env.tres" type="Environment" id=4]
-[ext_resource path="res://materials/shaders/dither.tres" type="Material" id=5]
+[ext_resource path="res://materials/shaders/sharpness.tres" type="Material" id=5]
 [ext_resource path="res://meshes/player_arm.obj" type="ArrayMesh" id=6]
 [ext_resource path="res://images/PlayerArms.png" type="Texture" id=7]
+[ext_resource path="res://materials/shaders/grain.tres" type="Material" id=8]
+[ext_resource path="res://materials/shaders/lens.tres" type="Material" id=9]
+[ext_resource path="res://GodotRetro/GodotRetro/Screen Shaders/Glitch.shader" type="Shader" id=10]
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 10 )
+shader_param/_ScanLineJitter = 0.2
+shader_param/_VerticalJump = 0.0
+shader_param/_HorizontalShake = 0.0
+shader_param/_ColorDrift = 0.03
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -62,6 +72,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 [node name="Camera" type="Camera" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0969592, 0 )
 environment = ExtResource( 4 )
+current = true
 
 [node name="Raycast" type="RayCast" parent="Head/Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
@@ -93,11 +104,6 @@ margin_right = 100.0
 margin_bottom = 100.0
 theme = ExtResource( 3 )
 
-[node name="ColorRect" type="ColorRect" parent="Head/Camera"]
-material = ExtResource( 5 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-
 [node name="MeshInstance" type="MeshInstance" parent="Head/Camera"]
 transform = Transform( -0.000808481, 0.174054, -0.0181561, 0.173669, 0.0030314, 0.0213271, 0.0215263, -0.0179195, -0.172744, 0.6, -0.45, 0.0499999 )
 visible = false
@@ -111,6 +117,44 @@ visible = false
 mesh = ExtResource( 6 )
 skeleton = NodePath("")
 material/0 = SubResource( 4 )
+
+[node name="Node" type="Node" parent="Head/Camera"]
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Head/Camera/Node"]
+copy_mode = 2
+rect = Rect2( 0, 0, 1920, 1080 )
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera/Node/BackBufferCopy"]
+material = ExtResource( 5 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="Head/Camera/Node"]
+copy_mode = 2
+rect = Rect2( 0, 0, 1920, 1080 )
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera/Node/BackBufferCopy2"]
+material = ExtResource( 8 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="Head/Camera/Node"]
+copy_mode = 2
+rect = Rect2( 0, 0, 1920, 1080 )
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera/Node/BackBufferCopy3"]
+material = ExtResource( 9 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BackBufferCopy4" type="BackBufferCopy" parent="Head/Camera/Node"]
+copy_mode = 2
+rect = Rect2( 0, 0, 1920, 1080 )
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera/Node/BackBufferCopy4"]
+material = SubResource( 7 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Head"]
 anims/RESET = SubResource( 5 )
